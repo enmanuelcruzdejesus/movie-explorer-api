@@ -4,7 +4,7 @@ import serverlessExpress from '@vendia/serverless-express';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { FavoritesModule } from '../favorites/favorites.module';
+import { FavoritesModule } from '../../favorites/favorites.module';
 
 let server: ReturnType<typeof serverlessExpress> | undefined;
 
@@ -14,7 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(FavoritesModule, adapter, { bufferLogs: true });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-  await app.init(); // important with custom adapter
+  await app.init(); // required with custom adapter
   return serverlessExpress({ app: expressApp });
 }
 
